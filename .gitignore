@@ -1,0 +1,40 @@
+# Bytecode and cache
+__pycache__/
+*.py[cod]
+*.so
+*.pyd
+
+# Virtual environment
+venv/
+env/
+*.venv
+
+# Logs and temp files
+*.log
+logs/
+*.tmp
+
+# System files
+.DS_Store
+Thumbs.db
+
+# Audio & output transcripts (optional, if you don’t want to track large files)
+*.wav
+*.mp3
+*.mp4
+transcripts/
+output/
+uploads/
+
+# Jupyter Notebooks (if used)
+.ipynb_checkpoints/
+
+# VS Code / IDE configs
+.vscode/
+.idea/
+*.swp
+
+poetry.lock
+
+
+
