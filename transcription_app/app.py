@@ -1,5 +1,6 @@
 import os
-from flask import Flask, request, jsonify, render_template
+from flask import Flask, request, jsonify, render_template, redirect, url_for
+from process_audio import process_audio, identify_speakers, extract_key_points
 
 app = Flask(__name__)
 
@@ -24,32 +25,20 @@ def upload_audio():
     audio_file.save(filepath)
 
     transcript = process_audio(filepath)
-
     key_points = extract_key_points(transcript)
     speakers = identify_speakers(filepath)
 
+    {
+        'transcript': transcript,
+        'key_points': key_points,
+        'speakers': speakers
+    }
+    
     transcript_file = os.path.join('transcripts', 'transcript.txt')
     with open(transcript_file, 'w') as f:
         f.write(transcript)
 
-    jsonify({
-        'transcript': transcript,
-        'key_points': key_points,
-        'speakers': speakers
-    })
-    return index()
-
-def process_audio(filepath):
-    return "This is a dummy transcript from the audio."
-
-def extract_key_points(transcript):
-    from collections import Counter
-    words = transcript.lower().split()
-    counter = Counter(words)
-    return counter.most_common(3)
-
-def identify_speakers(filepath):
-    return ["Speaker 1", "Speaker 2"]
+    return redirect(url_for('index'))
 
 if __name__ == '__main__':
     app.run(debug=True)
