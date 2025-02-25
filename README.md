@@ -24,3 +24,6 @@ Goal: Add key point detection, speaker identification, and a basic UI
 8. Integrate with Google Docs for saving transcripts. (1-2 hours)
 
 🎯 Outcome: A lightweight web-based transcription app with automated highlights & storage options.
+
+TODO:
+Redact PII 

@@ -14,6 +14,7 @@ env/
 *.log
 logs/
 *.tmp
+transcript_segment_data.json
 
 # System files
 .DS_Store
@@ -26,6 +27,7 @@ Thumbs.db
 transcripts/
 output/
 uploads/
+conversion_wav/
 
 # Jupyter Notebooks (if used)
 .ipynb_checkpoints/

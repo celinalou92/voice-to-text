@@ -1,6 +1,6 @@
 import os
 from flask import Flask, request, jsonify, render_template, redirect, url_for
-from process_audio import process_audio, identify_speakers, extract_key_points
+from process_audio import transcribe_audio, identify_speakers, extract_key_points
 
 app = Flask(__name__)
 
@@ -23,10 +23,11 @@ def upload_audio():
     audio_file = request.files['audio']
     filepath = os.path.join('uploads', audio_file.filename)
     audio_file.save(filepath)
-
-    transcript = process_audio(filepath)
+    extracted_audio_file = os.path.join('conversion_wav', 'conversion.wav')
+    
+    transcript = transcribe_audio(filepath)
     key_points = extract_key_points(transcript)
-    speakers = identify_speakers(filepath)
+    speakers = identify_speakers(filepath, extracted_audio_file)
 
     {
         'transcript': transcript,
