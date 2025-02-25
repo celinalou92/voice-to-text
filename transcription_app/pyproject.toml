@@ -11,8 +11,8 @@ Flask = "^2.2"
 SpeechRecognition = "^3.8"
 openai = "^1.64.0"
 dotenv = "^0.9.9"
-pyannote-audio = "^3.3.2"
 pydub = "^0.25.1"
+pyannote-audio = "^3.3.2"
 
 [build-system]
 requires = ["poetry-core"]

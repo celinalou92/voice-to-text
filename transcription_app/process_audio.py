@@ -45,10 +45,16 @@ def identify_speakers(filepath, extracted_audio_file):
     audio = AudioSegment.from_file(filepath, format="m4a")
     audio.export(extracted_audio_file, format="wav")
 
-    # pipeline = Pipeline.from_pretrained('pyannote/speaker-diarization@2.1', use_auth_token=HUGGINGFACE_TOKEN)
-    # diarization = pipeline(output_file)
+    wav_file = open(extracted_audio_file, "rb")
+    
+    pipeline = Pipeline.from_pretrained('pyannote/speaker-diarization-3.1', use_auth_token=HUGGINGFACE_TOKEN)
+    
+    diarization = pipeline(wav_file)
 
-    # for segment, _, speaker in diarization.itertracks(yield_label=True):
-    #    print(f"Speaker {speaker} speaks from {segment.start:.2f} to {segment.end:.2f} seconds.")
+    diarization_output = os.path.join('diarization', 'diarization_output.txt')
+
+    with open(diarization_output, 'w') as f:
+        for segment, _, speaker in diarization.itertracks(yield_label=True):
+            f.write(f"Speaker {speaker} speaks from {segment.start:.2f} to {segment.end:.2f} seconds.")
     
     return ["Speaker 1", "Speaker 2"]

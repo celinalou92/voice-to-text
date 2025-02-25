@@ -27,3 +27,4 @@ Goal: Add key point detection, speaker identification, and a basic UI
 
 TODO:
 Redact PII 
+Change to GPU huggingface 

@@ -15,6 +15,7 @@ env/
 logs/
 *.tmp
 transcript_segment_data.json
+diarization_data.txt
 
 # System files
 .DS_Store
@@ -28,6 +29,7 @@ transcripts/
 output/
 uploads/
 conversion_wav/
+diarization/
 
 # Jupyter Notebooks (if used)
 .ipynb_checkpoints/
