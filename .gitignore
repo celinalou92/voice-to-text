@@ -15,23 +15,22 @@ env/
 logs/
 *.tmp
 transcript_segment_data.json
-diarization_data.txt
+diarization_data.json
 
 # System files
 .DS_Store
 Thumbs.db
 
-# Audio & output transcripts (optional, if you don’t want to track large files)
+# Audio & output transcripts
 *.wav
 *.mp3
 *.mp4
 transcripts/
 output/
 uploads/
-conversion_wav/
-diarization/
+sample_data/
 
-# Jupyter Notebooks (if used)
+# Jupyter Notebooks
 .ipynb_checkpoints/
 
 # VS Code / IDE configs
