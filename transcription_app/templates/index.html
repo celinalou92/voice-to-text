@@ -10,8 +10,14 @@
         <button type="submit">Upload</button>
     </form>
     {% if transcript %}
-    <h2>Transcript:</h2>
-    <pre>{{ transcript }}</pre>
+    <h2>Transcript with Speakers:</h2>
+    <ul>
+    {% for segment in transcript %}
+        <li>
+            <strong>{{ segment.speaker }}</strong> ({{ segment.start }}s - {{ segment.end }}s): {{ segment.text }}
+        </li>
+    {% endfor %}
+    </ul>
     {% endif %}
 </body>
 </html>
