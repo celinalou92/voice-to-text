@@ -1,7 +1,7 @@
 import json
 import os
 
-def parse(transcript_data, speaker_data):
+def transcription_response(transcript_data, speaker_data):
     transcript_file = os.path.join('output/transcripts', 'transcript.json')
     data_t = load_json(transcript_data)
     data_s = load_json(speaker_data)
@@ -48,7 +48,7 @@ def parse(transcript_data, speaker_data):
 
     with open(transcript_file, "w") as f:
             json.dump(collapsed_transcription, f, indent=4)
-
+    
     return collapsed_transcription
         
 def load_json(file_path):

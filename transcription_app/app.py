@@ -1,8 +1,9 @@
 import os
 import json
 from flask import Flask, request, jsonify, render_template, redirect, url_for
-from process_audio import transcribe_audio, identify_speakers 
-from transcript_response import parse
+from process_audio import transcribe_audio
+from diarization_service import identify_speakers 
+from transcript_response import transcription_response
 
 app = Flask(__name__)
 
@@ -28,17 +29,18 @@ def upload_audio():
     audio_file.save(filepath)
     
     
-    print("👨‍💻 Whisper....")
+    print("👨‍💻 Processing Audio....")
     transcript_data = transcribe_audio(filepath)
-    print("✅ Whisper Complete")
+    print("✅ Processing Audio Complete\n")
 
     print("👨‍💻 Diaritzation....")
     speaker_data = identify_speakers(filepath)
-    print("✅ Diaritzation Complete")
+    print("✅ Diaritzation Complete\n")
 
     print("👨‍💻 Parsing...")
-    parse(transcript_data,speaker_data)
-    print("✅ Parsing Complete")
+    response = transcription_response(transcript_data,speaker_data)
+    print("✅ Parsing Complete\n")
+    print(response)
     
     return redirect(url_for('index'))
 
