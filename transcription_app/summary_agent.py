@@ -89,64 +89,76 @@ Summary of Key Points:
 """
 
 client = OpenAI(api_key=OPENAI_API_KEY)
-transcript_file = os.path.join('output/transcripts', 'transcript.json')
+summary_file_path = os.path.join('output/openai', 'summary.json')
+
 
 def load_json(file_path):
     with open(file_path, "r") as f:
             return json.load(f)
 
-transcript = load_json(transcript_file)
-transcript_text = json.dumps(transcript, indent=2)
-
-response = client.responses.create(
-    model="gpt-4o-mini",
-    instructions=instructions,
-    input=[
-        {
-            "role": "user",
-            "content": [
+def generate_summary(transcript_data):
+    transcript = load_json(transcript_data)
+    transcript_text = json.dumps(transcript, indent=2)
+    try:
+        response = client.responses.create(
+            model="gpt-4o-mini",
+            instructions=instructions,
+            input=[
                 {
-                    "text": transcript_text,
-                    "type": "input_text",
+                    "role": "user",
+                    "content": [
+                        {
+                            "text": transcript_text,
+                            "type": "input_text",
+                        }
+                    ],
                 }
             ],
-        }
-    ],
-    text={
-        "format": {
-            "type": "json_schema",
-            "name": "summary",
-            "schema": {
-                "type": "object",
-                "properties": {
-                    "observations": {"type": "string"},
-                    "key_points": {
+            text={
+                "format": {
+                    "type": "json_schema",
+                    "name": "summary",
+                    "schema": {
                         "type": "object",
                         "properties": {
-                            "account_status": {"type": "string"},
-                            "customer_inquiry": {"type": "string"},
-                            "account_issues": {"type": "string"},
-                            "customer_service_response": {"type": "string"},
-                            "outcome": {"type": "string"},
+                            "observations": {"type": "string"},
+                            "key_points": {
+                                "type": "object",
+                                "properties": {
+                                    "account_status": {"type": "string"},
+                                    "customer_inquiry": {"type": "string"},
+                                    "account_issues": {"type": "string"},
+                                    "customer_service_response": {"type": "string"},
+                                    "outcome": {"type": "string"},
+                                },
+                                "required": [
+                                    "account_status",
+                                    "customer_inquiry",
+                                    "account_issues",
+                                    "customer_service_response",
+                                    "outcome",
+                                ],
+                                "additionalProperties": False,
+                            },
                         },
-                        "required": [
-                            "account_status",
-                            "customer_inquiry",
-                            "account_issues",
-                            "customer_service_response",
-                            "outcome",
-                        ],
+                        "required": ["observations", "key_points"],
                         "additionalProperties": False,
                     },
-                },
-                "required": ["observations", "key_points"],
-                "additionalProperties": False,
+                    "strict": True,
+                }
             },
-            "strict": True,
-        }
-    },
-    temperature=1,
-    max_output_tokens=2048,
-    top_p=1,
-    store=False,
-)
+            temperature=1,
+            max_output_tokens=2048,
+            top_p=1,
+            store=False,
+        )
+
+        summary = response.output_text
+        with open(summary_file_path, "w") as f:
+                data = json.loads(summary)
+                json.dump(data, f, indent=4)
+
+        return summary_file_path
+    except Exception as e:
+        logging.error(e)
+        return "An unexpected error occurred"

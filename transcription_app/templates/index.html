@@ -10,14 +10,40 @@
         <button type="submit">Upload</button>
     </form>
     {% if transcript %}
-    <h2>Transcript with Speakers:</h2>
-    <ul>
-    {% for segment in transcript %}
-        <li>
-            <strong>{{ segment.speaker }}</strong> ({{ segment.start }}s - {{ segment.end }}s): {{ segment.text }}
-        </li>
-    {% endfor %}
-    </ul>
+        <h2>Transcript with Speakers:</h2>
+        <h3>Summary</h3>
+            <p>{{ transcript.summary.observations }}</p>
+        <h3>Account Status</h3>
+            <p>{{ transcript.summary.key_points.account_status }}</p>
+        <h3>Customer Inquiry</h3>
+            <p>{{ transcript.summary.key_points.customer_inquiry }}</p>
+        <h3>Account Issues</h6>
+            <p>{{ transcript.summary.key_points.account_issues }}</p>
+        <h3>Customer Service Response</h3>
+            <p>{{ transcript.summary.key_points.customer_service_response }}</p>
+        <h3>Outcome</h3>
+            <p>{{ transcript.summary.key_points.outcome  }}</p>
+
+        <table  cellspacing="0" cellpadding="10">
+            <thead>
+                <tr>
+                    <th>Speaker</th>
+                    <th>Time (s)</th>
+                    <th>Text</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for segment in transcript.segments %}
+                <tr>
+                    <td><strong>{{ segment.speaker }}</strong></td>
+                    <td>{{ segment.start }} - {{ segment.end }}</td>
+                    <td>{{ segment.text }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+     <h3>Waiting...</h3>
     {% endif %}
 </body>
 </html>

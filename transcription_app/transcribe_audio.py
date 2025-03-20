@@ -4,7 +4,7 @@ import logging
 import json
 from openai import OpenAI
 from dotenv import load_dotenv
-from summary_agent import response
+
 
 load_dotenv()
 logging.basicConfig(level=logging.ERROR)
@@ -18,14 +18,7 @@ if not OPENAI_API_KEY:
 def transcribe_audio(filepath):
     client = OpenAI(api_key=OPENAI_API_KEY)
     audio_file= open(filepath, "rb")
-
-    whisper_file_path = os.path.join('output/whisper', 'whisper_transcript.json')
-    transcript_output = os.path.join('output/transcripts', 'transcript.json')
-
-    final_transcript = {
-        "summary": response.output_text,
-        "transcript_segments": []
-    }
+    whisper_filepath = os.path.join('output/whisper', 'whisper_transcript.json')
 
     try:
         transcription = client.audio.transcriptions.create(
@@ -44,13 +37,11 @@ def transcribe_audio(filepath):
                 "text": segment.text
             }
             transcription_segments.append(transcription_data)
-        final_transcript["transcript_segments"] = transcription_segments
-
-        with open(whisper_file_path, "w") as f:
+    
+        with open(whisper_filepath, "w") as f:
             json.dump(transcription_segments, f, indent=4)
-        with open(transcript_output, "w") as f:
-            json.dump(final_transcript, f, indent=4)
-        return whisper_file_path
+            
+        return whisper_filepath
     except Exception as e:
         logging.error(e)
         return "An unexpected error occurred"

@@ -3,8 +3,12 @@ import os
 
 def transcription_response(transcript_data, speaker_data):
     transcript_file = os.path.join('output/transcripts', 'transcript.json')
+    summary_file_path = os.path.join('output/openai', 'summary.json')
+
     data_t = load_json(transcript_data)
     data_s = load_json(speaker_data)
+    data_summary = load_json(summary_file_path)
+
 
     labeled_transcription = []
     for seg_t in data_t:
@@ -46,11 +50,15 @@ def transcription_response(transcript_data, speaker_data):
             else:
                 collapsed_transcription.append(segment)
 
+    final_transcript = {
+         "summary": data_summary,
+         "segments": collapsed_transcription
+    }
+
     with open(transcript_file, "w") as f:
-            json.dump(collapsed_transcription, f, indent=4)
+            json.dump(final_transcript, f, indent=4)
+    return transcript_file
     
-    return collapsed_transcription
-        
 def load_json(file_path):
     with open(file_path, "r") as f:
             return json.load(f)
