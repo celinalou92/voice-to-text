@@ -41,8 +41,10 @@ SUMMARY_AGENT=optional-agent-name
 
 ### ▶️ **Running the App**
 ```bash
-uvicorn src.main:app --reload
+# uvicorn src.main:app --reload 
 poetry run python app.py
+
+poetry run python manage.py runserver
 ```
 ---
 
