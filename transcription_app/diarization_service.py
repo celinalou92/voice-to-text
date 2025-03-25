@@ -5,7 +5,6 @@ import torch
 import sys
 from pyannote.audio import Pipeline
 from pyannote.audio.pipelines.utils.hook import ProgressHook
-import requests
 from pydub import AudioSegment
 from dotenv import load_dotenv
 
@@ -31,6 +30,7 @@ def identify_speakers(filepath):
             print("Warning: CUDA not available, running on CPU")
         with ProgressHook() as hook:
             diarization = pipeline(wav_file, hook=hook)
+
         speaker_segments = []
         with open(diarization_filepath, 'w') as f:
             for segment, _, speaker in diarization.itertracks(yield_label=True):
@@ -41,7 +41,8 @@ def identify_speakers(filepath):
                 }
                 speaker_segments.append(speaker_data)
             json.dump(speaker_segments, f, indent=4)
+            
         return speaker_segments
     except Exception as e:
      logging.error(e)
-    return "An unexpected error occurred"
+    return f"An unexpected error occurred {e}"

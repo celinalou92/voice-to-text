@@ -91,12 +91,8 @@ Summary of Key Points:
 client = OpenAI(api_key=OPENAI_API_KEY)
 summary_file_path = os.path.join('output/openai', 'summary.json')
 
-
-def load_json(file_path):
-    with open(file_path, "r") as f:
-            return json.load(f)
-
 def generate_summary(transcript_data):
+    transcript_text = json.dumps(transcript_data)
     try:
         response = client.responses.create(
             model="gpt-4o-mini",
@@ -106,7 +102,7 @@ def generate_summary(transcript_data):
                     "role": "user",
                     "content": [
                         {
-                            "text": transcript_data,
+                            "text": transcript_text,
                             "type": "input_text",
                         }
                     ],
@@ -150,13 +146,10 @@ def generate_summary(transcript_data):
             top_p=1,
             store=False,
         )
-
-        summary = response.output_text
+        summary = json.loads(response.output_text)
         with open(summary_file_path, "w") as f:
-                data = json.loads(summary)
-                json.dump(data, f, indent=4)
-
+                json.dump(summary, f, indent=4)
         return summary
     except Exception as e:
         logging.error(e)
-        return "An unexpected error occurred"
+        return f"An unexpected error occurred: {e}"

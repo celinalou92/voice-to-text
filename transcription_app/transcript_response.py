@@ -1,7 +1,7 @@
 import json
 import os
 
-def transcription_response(transcript_data, speaker_data, summary_data):
+def transcription_response(transcript_data, summary_data, speaker_data):
     transcript_file = os.path.join('output/transcripts', 'transcript.json')
 
     labeled_transcription = []
