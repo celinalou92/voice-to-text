@@ -1,7 +1,7 @@
 ---
-title: {{Voice to Text Project}}
-sdk: {{streamlit}}
-app_file: transcription_app/app.py
+title: "Voice to Text Project"
+sdk: "streamlit"
+app_file: "transcription_app/app.py"
 pinned: false
 ---
 
