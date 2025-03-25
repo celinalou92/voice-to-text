@@ -6,7 +6,7 @@ def transcription_response(transcript_data, speaker_data):
     summary_file_path = os.path.join('output/openai', 'summary.json')
 
     data_t = load_json(transcript_data)
-    data_s = load_json(speaker_data)
+    # data_s = load_json(speaker_data)
     data_summary = load_json(summary_file_path)
 
 
@@ -17,7 +17,7 @@ def transcription_response(transcript_data, speaker_data):
         best_matching_speaker = None
         max_overlap = 0
 
-        for seg_s in data_s:
+        for seg_s in speaker_data:
             s_start = seg_s['start']
             s_end = seg_s['end']
             speaker = seg_s['speaker']

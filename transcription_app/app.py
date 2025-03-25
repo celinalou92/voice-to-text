@@ -38,7 +38,7 @@ def upload_audio():
     print(f"✅ Summary Complete... path= {summary_data}\n")
 
     print("👨‍💻 Diaritzation....")
-    speaker_data = identify_speakers(filepath)
+    speaker_data = identify_speakers(filepath, "https://4184-34-16-247-225.ngrok-free.app/diarize")
     print(f"✅ Diaritzation Complete: path= {speaker_data}\n")
 
     print("👨‍💻 Parsing...")
