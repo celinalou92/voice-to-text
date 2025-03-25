@@ -10,7 +10,6 @@ load_dotenv()
 logging.basicConfig(level=logging.ERROR)
 
 OPENAI_API_KEY = os.getenv('OPENAI_API_KEY')
-SUMMARY_AGENT = os.getenv('SUMMARY_AGENT')
 
 if not OPENAI_API_KEY: 
     logging.error(f"Missing required environment variables: {sys.exit(1)}")
@@ -41,7 +40,7 @@ def transcribe_audio(filepath):
         with open(whisper_filepath, "w") as f:
             json.dump(transcription_segments, f, indent=4)
             
-        return whisper_filepath
+        return transcription_segments
     except Exception as e:
         logging.error(e)
         return "An unexpected error occurred"

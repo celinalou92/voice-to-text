@@ -55,7 +55,7 @@ An example of the structured input is below. The text segments contain the conve
     {
         "start": 33.92,
         "end": 40.4,
-        "text": "Sure. Rachel Adams, rachel.adams@example.com. I submitted a cancellation request a few weeks ago, so I’m just not sure why the charge went through.",
+        "text": "Sure. **************** I submitted a cancellation request a few weeks ago, so I’m just not sure why the charge went through.",
         "speaker": "SPEAKER_01"
     }
 ]
@@ -97,8 +97,6 @@ def load_json(file_path):
             return json.load(f)
 
 def generate_summary(transcript_data):
-    transcript = load_json(transcript_data)
-    transcript_text = json.dumps(transcript, indent=2)
     try:
         response = client.responses.create(
             model="gpt-4o-mini",
@@ -108,7 +106,7 @@ def generate_summary(transcript_data):
                     "role": "user",
                     "content": [
                         {
-                            "text": transcript_text,
+                            "text": transcript_data,
                             "type": "input_text",
                         }
                     ],
@@ -158,7 +156,7 @@ def generate_summary(transcript_data):
                 data = json.loads(summary)
                 json.dump(data, f, indent=4)
 
-        return summary_file_path
+        return summary
     except Exception as e:
         logging.error(e)
         return "An unexpected error occurred"

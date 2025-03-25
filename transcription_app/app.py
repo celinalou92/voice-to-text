@@ -27,22 +27,21 @@ def upload_audio():
     audio_file = request.files['audio']
     filepath = os.path.join('uploads', audio_file.filename)
     audio_file.save(filepath)
-    
-    
+
     print("\n👨‍💻 Processing Audio....")
     transcript_data = transcribe_audio(filepath)
-    print(f"✅ Processing Audio Complete: path={transcript_data}\n")
+    print(f"✅ Processing Audio Complete!")
 
     print("👨‍💻 Generating Summary...")
     summary_data = generate_summary(transcript_data)
-    print(f"✅ Summary Complete... path= {summary_data}\n")
+    print(f"✅ Summary Complete!")
 
     print("👨‍💻 Diaritzation....")
-    speaker_data = identify_speakers(filepath, "https://4184-34-16-247-225.ngrok-free.app/diarize")
-    print(f"✅ Diaritzation Complete: path= {speaker_data}\n")
+    speaker_data = identify_speakers(filepath)
+    print(f"✅ Diaritzation Complete!")
 
     print("👨‍💻 Parsing...")
-    response_data = transcription_response(transcript_data,speaker_data)
+    response_data = transcription_response(transcript_data, summary_data, speaker_data)
     print(f"✅ Parsing Complete path= {response_data}\n")
 
     return redirect(url_for('index'))
