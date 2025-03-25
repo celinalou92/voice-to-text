@@ -1,6 +1,6 @@
 ---
 title: "Voice to Text Project"
-sdk: "streamlit"
+sdk: "docker"
 app_file: "transcription_app/app.py"
 pinned: false
 ---
@@ -25,45 +25,7 @@ An audio transcription application that converts speech to text with advanced fe
 - **OpenAI API (responses beta)**
 - **pyannote-audio**
 - **Jinja2 (HTML templating)**
-
-## 🚀 Getting Started
-
-### Prerequisites
-
-- Python 3.8+
-- Poetry (dependency management)
-- OpenAI API key
-- Hugging Face token
-
-### Installation
-
-1. Clone the repository
-   ```bash
-   git clone <repo>
-   cd voice-to-text
-   ```
-
-2. Install dependencies
-   ```bash
-   poetry install
-   ```
-
-3. Set up environment variables  
-   Create a `.env` file in the project root:
-   ```
-   OPENAI_API_KEY=your-openai-key-here
-   SUMMARY_AGENT=your-agent-id
-   HUGGINGFACE_TOKEN=your-huggingface-key-here
-   ```
-
-## 🏃‍♂️ Running the App
-
-```bash
-poetry run python app.py
-```
-
-The application will be available at http://localhost:8000
-
+  
 ## 📋 Usage
 
 1. Upload an audio file (.m4a, .wav)
@@ -74,27 +36,49 @@ The application will be available at http://localhost:8000
    - Generate a summary with key points
 3. View the results in the web interface
 
-## 📁 Project Structure
+## 🚀 Getting Started
 
+### Prerequisites
+- Python 3.8+
+- OpenAI API key
+- Hugging Face token
+- Flask
+- 
+### ⚙️ **Environment Setup**
+Create a `.env` file in your project root with:
+
+OPENAI_API_KEY=your-openai-key-here
+SUMMARY_AGENT=you-agent-id
+HUGGINGFACE_TOKEN=your-huggingface-key-here
+### ▶️ **Running the App**
+**Install Dependencies**
+1. Clone the repository
+   ```bash
+   git clone <repo>
+   cd voice-to-text
+   ```
+   
+2. Install dependencies
+    ```bash
+    python -m pip install -r requirements.txt
+    ```
+
+## 🏃‍♂️ Running the App
+
+**Run Locally**
+**Create virtual environment**
+```bash
+python -m venv venv
+source venv/bin/activate
 ```
-transcription_app/
-├── output/                         
-│   ├── conversion_wav/             
-│   ├── diarization/                
-│   ├── openai/                    
-│   ├── transcripts/                
-│   └── whisper/                    
-├── templates/
-├── uploads/                             
-├── app.py               
-├── diarization_service.py                
-├── requirements.txt               
-├── summary_agent.py               
-├── transcribe_audio.py           
-├── transcript_response.py                     
-├── CONTRIBUTING.md                      
-├── pyproject.toml 
+
+**Backend**
+```bash
+python app.py
 ```
+
+The application will be available at http://127.0.0.1:7860
+---
 
 ## 📄 Output Format
 
@@ -105,5 +89,3 @@ The application generates structured JSON outputs for transcripts, speaker ident
 Contributions welcome! See [CONTRIBUTING.md](/transcription_app/CONTRIBUTING.md) for development setup and guidelines.
 
 ## 📝 License
-
-[Add your license here]

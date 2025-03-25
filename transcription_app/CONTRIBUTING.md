@@ -48,12 +48,33 @@ SUMMARY_AGENT=you-agent-id
 HUGGINGFACE_TOKEN=your-huggingface-key-here
 
 ### ▶️ **Running the App**
+**Install Dependencies**
+1. Clone the repository
+   ```bash
+   git clone <repo>
+   cd voice-to-text
+   ```
+   
+2. Install dependencies
+    ```bash
+    python -m pip install -r requirements.txt
+    ```
+
+## 🏃‍♂️ Running the App
+
+**Run Locally**
+**Create virtual environment**
+```bash
+python -m venv venv
+source venv/bin/activate
+```
 
 **Backend**
 ```bash
-poetry run python app.py
+python app.py
 ```
 
+The application will be available at http://127.0.0.1:7860
 ---
 
 ## 📄 JSON Schema 
