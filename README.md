@@ -20,7 +20,7 @@ An audio transcription application that converts speech to text with advanced fe
 ## 👨‍💻 Tech Stack
 
 - **Python**
-- **FastAPI**
+- **Flask**
 - **Whisper AI**
 - **OpenAI API (responses beta)**
 - **pyannote-audio**

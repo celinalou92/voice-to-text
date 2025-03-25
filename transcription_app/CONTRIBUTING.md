@@ -4,7 +4,7 @@ An audio transcription application.
 ## 👨‍💻 Tech Stack
 
 - **Python**
-- **FastAPI**
+- **Flask**
 - **Whisper AI**
 - **OpenAI API (responses beta)**
 - **pyannote-audio**
