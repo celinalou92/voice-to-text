@@ -1,3 +1,10 @@
+---
+title: {{Voice to Text Project}}
+sdk: {{streamlit}}
+app_file: transcription_app/app.py
+pinned: false
+---
+
 # Voice to Text Project
 
 An audio transcription application that converts speech to text with advanced features for analysis.
