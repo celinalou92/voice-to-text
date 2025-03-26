@@ -2,7 +2,6 @@
 FROM python:3.13
 
 RUN useradd -m -u 1000 user
-
 USER user
 
 ENV HOME=/home/user \
