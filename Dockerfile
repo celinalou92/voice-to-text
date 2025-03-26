@@ -1,6 +1,15 @@
 FROM python:3.13
 
-WORKDIR /app
+# Set up a new user named "user" with user ID 1000
+RUN useradd -m -u 1000 user
+
+# Switch to the "user" user
+USER user
+
+ENV HOME=/home/user \
+	PATH=/home/user/.local/bin:$PATH
+
+WORKDIR $HOME/app
 
 # Install system dependencies
 RUN apt-get update && apt-get install -y \
@@ -17,7 +26,14 @@ COPY transcription_app/requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy application code
-COPY /transcription_app .
+COPY --chown=user /transcription_app $HOME/app
+
+RUN --mount=type=secret,id=OPENAI_API_KEY,mode=0444,required=true\
+    git remote add origin $(cat /run/secrets/OPENAI_API_KEY) \ 
+    --mount=type=secret,id=SUMMARY_AGENT,mode=0444,required=true\
+    git remote add origin $(cat /run/secrets/SUMMARY_AGENT) \ 
+    --mount=type=secret,id=HUGGINGFACE_TOKEN,mode=0444,required=true\
+    git remote add origin $(cat /run/secrets/HUGGINGFACE_TOKEN) \ 
 
 # Set environment variables
 ENV PORT=7860
