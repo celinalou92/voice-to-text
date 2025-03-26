@@ -2,6 +2,7 @@
 title: "Voice to Text Project"
 sdk: "docker"
 app_file: "transcription_app/app.py"
+app_port: 7860
 pinned: false
 ---
 
