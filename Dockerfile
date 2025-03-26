@@ -28,8 +28,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copy application code
 COPY --chown=user /transcription_app $HOME/app
 
-RUN --mount=type=secret,id=OPENAI_API_KEY,mode=0444,required=true\ 
-    cat /run/secrets/OPENAI_API_KEY
+RUN --mount=type=secret,id=OPENAI_API_KEY,mode=0444,required=true, env=$OPENAI_API_KEY \ --mount=type=secret,id=SUMMARY_AGENT,mode=0444,required=true, env=$SUMMARY_AGENT \ --mount=type=secret,id=HUGGINGFACE_TOKEN,mode=0444,required=true, env=$HUGGINGFACE_TOKEN
 
 # Set environment variables
 ENV PORT=7860
