@@ -9,8 +9,6 @@ USER user
 ENV HOME=/home/user \
 	PATH=/home/user/.local/bin:$PATH
 
-WORKDIR $HOME/app
-
 # Install system dependencies
 RUN apt-get update && apt-get install -y \
     ffmpeg \
@@ -19,6 +17,8 @@ RUN apt-get update && apt-get install -y \
     build-essential \
     git \
     && rm -rf /var/lib/apt/lists/*
+
+WORKDIR $HOME/app
 
 COPY transcription_app/requirements.txt .
 
