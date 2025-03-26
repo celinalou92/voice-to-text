@@ -17,14 +17,12 @@ RUN apt-get update && apt-get install -y \
     build-essential \
     git \
     && rm -rf /var/lib/apt/lists/*
-    
-COPY --chown=user . $HOME/app
 
-COPY requirements.txt .
+COPY ./transcription_app/requirements.txt .
 
 RUN pip install --no-cache-dir -r requirements.txt
 
-COPY --chown=user . $HOME/app
+COPY --chown=user ./transcription_app $HOME/app
 
 ENV PORT=7860
 
