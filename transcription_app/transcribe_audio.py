@@ -4,8 +4,6 @@ import logging
 import json
 from openai import OpenAI
 from dotenv import load_dotenv
-
-
 load_dotenv()
 logging.basicConfig(level=logging.ERROR)
 
@@ -36,11 +34,9 @@ def transcribe_audio(filepath):
                 "text": segment.text
             }
             transcription_segments.append(transcription_data)
-    
         with open(whisper_filepath, "w") as f:
             json.dump(transcription_segments, f, indent=4)
-            
         return transcription_segments
     except Exception as e:
-        logging.error(e)
-        return "An unexpected error occurred"
+        logging.error(f"Audio processing failed for {filepath}: {e}")
+        return f"Audio processing error: {e}"
