@@ -58,11 +58,6 @@ HUGGINGFACE_TOKEN=your-huggingface-key-here
    git clone <repo>
    cd voice-to-text
    ```
-   
-2. Install dependencies
-    ```bash
-    python -m pip install -r requirements.txt
-    ```
 
 ## 🏃‍♂️ Running the App
 
@@ -71,7 +66,15 @@ HUGGINGFACE_TOKEN=your-huggingface-key-here
 ```bash
 python -m venv venv
 source venv/bin/activate
-```
+
+
+``` 
+   Install dependencies
+    ```bash
+    python -m pip install -r requirements.txt
+    ```
+
+
 
 **Backend**
 ```bash
@@ -87,6 +90,6 @@ The application generates structured JSON outputs for transcripts, speaker ident
 
 ## 🤝 Contributing
 
-Contributions welcome! See [CONTRIBUTING.md](/transcription_app/CONTRIBUTING.md) for development setup and guidelines.
+Contributions welcome! See [CONTRIBUTING.md](/transcription_app/CONTRIBUTING.md) for development setup and guidelines
 
 ## 📝 License

@@ -6,9 +6,11 @@ __pycache__/
 
 # Virtual environment
 venv/
+myenv/
 env/
 *.venv
 .env
+pyvenv.cfg
 
 # Logs and temp files
 *.log
