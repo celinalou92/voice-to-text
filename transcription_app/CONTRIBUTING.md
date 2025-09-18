@@ -47,20 +47,6 @@ OPENAI_API_KEY=your-openai-key-here
 SUMMARY_AGENT=you-agent-id
 HUGGINGFACE_TOKEN=your-huggingface-key-here
 
-### ▶️ **Running the App**
-**Install Dependencies**
-1. Clone the repository
-   ```bash
-   git clone <repo>
-   cd voice-to-text
-   ```
-   
-2. Install dependencies
-    ```bash
-    python -m pip install -r requirements.txt
-    ```
-
-## 🏃‍♂️ Running the App
 
 **Run Locally**
 **Create virtual environment**
@@ -68,6 +54,11 @@ HUGGINGFACE_TOKEN=your-huggingface-key-here
 python -m venv venv
 source venv/bin/activate
 ```
+
+1. Install dependencies
+    ```bash
+    python -m pip install -r requirements.txt
+    ```
 
 **Backend**
 ```bash
