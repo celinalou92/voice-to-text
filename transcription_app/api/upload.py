@@ -19,7 +19,7 @@ def upload_audio():
 
     print("\n👨‍💻 Processing Audio....")
     print(f"    ... Transcribing Summary...")
-    transcript_data = transcribe_audio(wav_file)
+    transcript_data = transcribe_audio(filepath)
     print(f"    ✅ Transcription Complete!")
 
     print(f"    ... Generating Summary...")
