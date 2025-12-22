@@ -92,7 +92,18 @@ client = OpenAI(api_key=OPENAI_API_KEY)
 summary_file_path = os.path.join('output/openai', 'summary.json')
 
 def generate_summary(transcript_data):
-    transcript_text = json.dumps(transcript_data)
+    transcription = []
+    for segment in transcript_data.segments:
+        transcription_data = {
+                        "id": segment["id"],
+                        "start": round(segment["start"], 2),
+                        "end": round(segment["end"], 2),
+                        "speaker": segment["speaker"],
+                        "text": segment["text"]
+                    }
+        transcription.append(transcription_data)
+    transcript_text = json.dumps(transcription)
+
     try:
         response = client.responses.create(
             model="gpt-4o-mini",
@@ -146,6 +157,7 @@ def generate_summary(transcript_data):
             top_p=1,
             store=False,
         )
+        ## TODO change return?
         summary = json.loads(response.output_text)
         with open(summary_file_path, "w") as f:
                 json.dump(summary, f, indent=4)
