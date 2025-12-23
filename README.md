@@ -1,10 +1,12 @@
 ---
-title: "Voice to Text Project"
+title: "Conversation Analysis"
 ---
 
 # Voice to Text Project
 
-An audio transcription application that converts speech to text with features for analysis.
+An audio transcription application that converts speech to text with features for analysis of customer service interactions for compliance, liability, and service quality issues
+
+![Conversation Analysis](./conversation-ana-screengrab.png)
 
 ---
 
@@ -35,3 +37,11 @@ An audio transcription application that converts speech to text with features fo
 Contributions welcome! See [CONTRIBUTING.md](/transcription_app/CONTRIBUTING.md) for development setup and guidelines
 
 ## 📝 License
+
+## Deployed App
+https://conversation-analysis.fly.dev/
+
+## Questions
+For any questions please reach out to via:
+github: [celinalou92](https://github.com/celinalou92) or
+email: celinalouissaint@gmail.com
