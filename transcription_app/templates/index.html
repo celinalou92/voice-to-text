@@ -1,50 +1,376 @@
 <!doctype html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Audio Transcription</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif;
+            background: #f5f7fa;
+            min-height: 100vh;
+            padding: 24px;
+            color: #1a1a1a;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
+        }
+
+        header {
+            background: #ffffff;
+            padding: 48px 40px;
+            border-bottom: 1px solid #e8eaed;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 32px;
+            font-weight: 500;
+            margin-bottom: 8px;
+            color: #1a1a1a;
+            letter-spacing: -0.5px;
+        }
+
+        header p {
+            font-size: 15px;
+            color: #5f6368;
+            font-weight: 400;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .upload-section {
+            margin-bottom: 40px;
+            padding: 32px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border: 1px solid #e8eaed;
+            text-align: center;
+        }
+
+        .upload-section input[type="file"] {
+            display: block;
+            margin: 20px auto;
+            padding: 8px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .upload-section button {
+            background: #1f73e6;
+            color: white;
+            border: none;
+            padding: 10px 32px;
+            border-radius: 4px;
+            font-size: 15px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background 0.2s, box-shadow 0.2s;
+        }
+
+        .upload-section button:hover {
+            background: #1557b0;
+            box-shadow: 0 2px 8px rgba(31, 115, 230, 0.3);
+        }
+
+        .waiting {
+            text-align: center;
+            color: #5f6368;
+            font-size: 16px;
+            padding: 80px 20px;
+        }
+
+        .summary-section {
+            margin-bottom: 48px;
+        }
+
+        .summary-section h2 {
+            font-size: 20px;
+            font-weight: 500;
+            color: #1a1a1a;
+            margin-bottom: 28px;
+            letter-spacing: -0.3px;
+        }
+
+        .summary-wrapper {
+            display: flex;
+            gap: 24px;
+            align-items: flex-start;
+        }
+
+        .observations {
+            background: #f8f9fa;
+            padding: 28px;
+            border-radius: 8px;
+            flex: 0 0 35%;
+            min-width: 0;
+            border: 1px solid #e8eaed;
+        }
+
+        .observations h3 {
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            color: #5f6368;
+            margin-bottom: 14px;
+            letter-spacing: 0.4px;
+        }
+
+        .observations p {
+            font-size: 14px;
+            color: #202124;
+            line-height: 1.8;
+            font-weight: 400;
+        }
+
+        .summary-top-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-bottom: 16px;
+        }
+
+        .summary-bottom-row {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+        }
+
+        .summary-card {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid #e8eaed;
+        }
+
+        .summary-card h3 {
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            color: #5f6368;
+            margin-bottom: 12px;
+            letter-spacing: 0.4px;
+        }
+
+        .summary-card p {
+            font-size: 13px;
+            color: #202124;
+            line-height: 1.6;
+            font-weight: 400;
+        }
+
+        .summary-card p.empty {
+            color: #9aa0a6;
+            font-style: italic;
+        }
+
+        .transcript-section {
+            margin-top: 48px;
+        }
+
+        .transcript-section h2 {
+            font-size: 20px;
+            font-weight: 500;
+            color: #1a1a1a;
+            margin-bottom: 28px;
+            letter-spacing: -0.3px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+        }
+
+        thead {
+            background: #f8f9fa;
+            border-bottom: 2px solid #e8eaed;
+        }
+
+        th {
+            padding: 16px 12px;
+            text-align: left;
+            font-weight: 600;
+            color: #202124;
+            font-size: 13px;
+            letter-spacing: -0.2px;
+        }
+
+        td {
+            padding: 14px 12px;
+            border-bottom: 1px solid #f0f0f0;
+            color: #5f6368;
+            font-size: 13px;
+        }
+
+        tbody tr:hover {
+            background: #f8f9fa;
+        }
+
+        td strong {
+            color: #1f73e6;
+            font-weight: 600;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                border-radius: 0;
+            }
+
+            header {
+                padding: 32px 24px;
+            }
+
+            header h1 {
+                font-size: 24px;
+            }
+
+            header p {
+                font-size: 14px;
+            }
+
+            .content {
+                padding: 24px;
+            }
+
+            .upload-section {
+                padding: 24px;
+            }
+
+            .upload-section button {
+                padding: 10px 24px;
+                font-size: 14px;
+            }
+
+            .summary-top-row,
+            .summary-bottom-row {
+                grid-template-columns: 1fr !important;
+            }
+
+            table {
+                font-size: 12px;
+            }
+
+            th, td {
+                padding: 12px 8px;
+            }
+
+            .summary-section h2,
+            .transcript-section h2 {
+                font-size: 18px;
+                margin-bottom: 20px;
+            }
+        }
+    </style>
 </head>
 <body>
-    <h1>Upload Audio File</h1>
-    <form action="/api/upload" method="post" enctype="multipart/form-data">
-        <input type="file" name="audio" accept=".m4a,.mp4,.wav,.mp3,.flac,.aac,.ogg,.wma" required>
-        <button type="submit">Upload</button>
-    </form>
-    
-    {% if transcript %}
-        <h2>Transcript with Speakers:</h2>
-        <h3>Summary</h3>
-            <p>{{ transcript.summary.observations }}</p>
-        <h3>Account Status</h3>
-            <p>{{ transcript.summary.key_points.account_status }}</p>
-        <h3>Customer Inquiry</h3>
-            <p>{{ transcript.summary.key_points.customer_inquiry }}</p>
-        <h3>Account Issues</h6>
-            <p>{{ transcript.summary.key_points.account_issues }}</p>
-        <h3>Customer Service Response</h3>
-            <p>{{ transcript.summary.key_points.customer_service_response }}</p>
-        <h3>Outcome</h3>
-            <p>{{ transcript.summary.key_points.outcome  }}</p>
+    <div class="container">
+        <header>
+            <h1>Audio Transcription</h1>
+            <p>Upload audio files to get instant transcripts with speaker identification and summarization</p>
+        </header>
 
-        <table  cellspacing="0" cellpadding="10">
-            <thead>
-                <tr>
-                    <th>Speaker</th>
-                    <th>Time (s)</th>
-                    <th>Text</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for segment in transcript.segments %}
-                <tr>
-                    <td><strong>{{ segment.speaker }}</strong></td>
-                    <td>{{ segment.start }} - {{ segment.end }}</td>
-                    <td>{{ segment.text }}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    {% else %}
-     <h3>Waiting...</h3>
-    {% endif %}
+        <div class="content">
+            <div class="upload-section">
+                <form action="/api/upload" method="post" enctype="multipart/form-data">
+                    <input type="file" name="audio" accept=".m4a,.mp4,.wav,.mp3,.flac,.aac,.ogg,.wma" required>
+                    <button type="submit">Upload & Transcribe</button>
+                </form>
+            </div>
+
+            {% if transcript %}
+                <div class="summary-section">
+                    <h2>Summary</h2>
+                    
+                    <div class="summary-top-row">
+                        <div class="summary-card">
+                            <h3>Overview</h3>
+                            <p {% if transcript.summary.observations == 'N/A' %}class="empty"{% endif %}>
+                                {{ transcript.summary.observations }}
+                            </p>
+                        </div>
+
+                        <div class="summary-card">
+                            <h3>Outcome</h3>
+                            <p {% if transcript.summary.key_points.outcome == 'N/A' %}class="empty"{% endif %}>
+                                {{ transcript.summary.key_points.outcome }}
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="summary-bottom-row">
+                        <div class="summary-card">
+                            <h3>Account Status</h3>
+                            <p {% if transcript.summary.key_points.account_status == 'N/A' %}class="empty"{% endif %}>
+                                {{ transcript.summary.key_points.account_status }}
+                            </p>
+                        </div>
+
+                        <div class="summary-card">
+                            <h3>Customer Inquiry</h3>
+                            <p {% if transcript.summary.key_points.customer_inquiry == 'N/A' %}class="empty"{% endif %}>
+                                {{ transcript.summary.key_points.customer_inquiry }}
+                            </p>
+                        </div>
+
+                        <div class="summary-card">
+                            <h3>Account Issues</h3>
+                            <p {% if transcript.summary.key_points.account_issues == 'N/A' %}class="empty"{% endif %}>
+                                {{ transcript.summary.key_points.account_issues }}
+                            </p>
+                        </div>
+
+                        <div class="summary-card">
+                            <h3>Customer Service Response</h3>
+                            <p {% if transcript.summary.key_points.customer_service_response == 'N/A' %}class="empty"{% endif %}>
+                                {{ transcript.summary.key_points.customer_service_response }}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="transcript-section">
+                    <h2>Transcript</h2>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th style="width: 80px;">Speaker</th>
+                                <th style="width: 150px;">Time (s)</th>
+                                <th>Text</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for segment in transcript.segments %}
+                            <tr>
+                                <td><strong>{{ segment.speaker }}</strong></td>
+                                <td>{{ segment.start }} – {{ segment.end }}</td>
+                                <td>{{ segment.text }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+
+            {% else %}
+                <div class="waiting">
+                    <p>Upload an audio file to get started</p>
+                </div>
+            {% endif %}
+        </div>
+    </div>
 </body>
-</html> 
+</html>
