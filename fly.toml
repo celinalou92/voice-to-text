@@ -1,0 +1,38 @@
+# fly.io deployment config
+app = "conversation-analysis"
+primary_region = "sjc"
+
+[build]
+  builder = "paackages"
+  [build.args]
+    PYTHON_VERSION = "3.11"
+
+[env]
+  PYTHONUNBUFFERED = "true"
+  FLASK_ENV = "production"
+
+[processes]
+  web = "python app.py"
+
+[[services]]
+  internal_port = 8080
+  processes = ["web"]
+  protocol = "tcp"
+  [services.concurrency]
+    hard_limit = 25
+    soft_limit = 20
+  [[services.ports]]
+    handlers = ["http"]
+    port = 80
+  [[services.ports]]
+    handlers = ["tls", "http"]
+    port = 443
+
+[checks]
+  [checks.alive]
+    grace_period = "5s"
+    interval = "30s"
+    method = "GET"
+    timeout = "5s"
+    type = "http"
+    uri = "/"

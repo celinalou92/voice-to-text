@@ -1,14 +1,10 @@
-FROM python:3.13
+FROM python:3.13-slim
 
 # Install system dependencies
 RUN apt-get update && apt-get install -y \
-    ffmpeg \
-    libsndfile1 \
-    cmake \
-    build-essential \
-    git \
+    gcc \
     && rm -rf /var/lib/apt/lists/*
-    
+
 # Set up a new user named "user" with user ID 1000
 RUN useradd -m -u 1000 user
 
@@ -20,11 +16,11 @@ ENV HOME=/home/user \
 
 WORKDIR $HOME/app
 
-COPY transcription_app/requirements.txt .
+COPY requirements.txt .
 
 RUN pip install --no-cache-dir -r requirements.txt
 
-COPY --chown=user /transcription_app $HOME/app
+COPY --chown=user . $HOME/app
 
 RUN mkdir -p uploads \
     output/transcripts
