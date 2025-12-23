@@ -1,19 +1,5 @@
-import os
-import sys
 import logging
 import json
-from openai import OpenAI
-from dotenv import load_dotenv
-
-load_dotenv()
-logging.basicConfig(level=logging.ERROR)
-
-OPENAI_API_KEY = os.getenv('OPENAI_API_KEY')
-SUMMARY_ASSISTANT = os.getenv('SUMMARY_ASSISTANT')
-
-if not OPENAI_API_KEY or not SUMMARY_ASSISTANT: 
-    logging.error(f"Missing required environment variables: {sys.exit(1)}")
-
 instructions = """
 You are a paralegal assistant that is reviewing conversations to identify customer neglect and liability to the corporation.
 You should evaluate these conversations in a non-biased manner, but with deep knowledge of business misconduct and consumer law.
@@ -91,6 +77,7 @@ Summary of Key Points:
 client = OpenAI(api_key=OPENAI_API_KEY)
 
 def generate_summary(transcript_data):
+    print(f"    ... Generating Summary...")
     transcription = []
     for segment in transcript_data.segments:
         transcription_data = {
@@ -156,6 +143,7 @@ def generate_summary(transcript_data):
             top_p=1,
             store=False,
         )        
+        print(f"    ✅ Summary Complete!")
         return response
     except Exception as e:
         logging.error(f"Summary processing error: {e}")

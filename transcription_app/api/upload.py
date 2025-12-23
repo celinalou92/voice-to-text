@@ -15,15 +15,12 @@ def upload_audio():
     audio_file.save(filepath)
 
     print("\n👨‍💻 Processing Audio....")
-    print(f"    ... Transcribing...")
+    
     whisper_response = transcribe_audio(filepath)
-    print(f"    ✅ Transcription Complete!")
-
-    print(f"    ... Generating Summary...")
     summary_response = generate_summary(whisper_response)
-    print(f"    ✅ Summary Complete!")
-
+    
     transcription_response(whisper_response, summary_response)
+
     print(f"✅ Processing Audio Complete!")
 
     return redirect(url_for('index'))

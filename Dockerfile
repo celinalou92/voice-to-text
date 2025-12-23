@@ -34,7 +34,6 @@ RUN mkdir -p uploads \
     output/whisper
 
 RUN --mount=type=secret,id=OPENAI_API_KEY,mode=0444,required=true 
-RUN --mount=type=secret,id=SUMMARY_AGENT,mode=0444,required=true
 RUN --mount=type=secret,id=HUGGINGFACE_TOKEN,mode=0444,required=true
 
 ENV PORT=7860
