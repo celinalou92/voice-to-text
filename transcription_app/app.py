@@ -2,8 +2,6 @@ import os
 import json
 from flask import Flask, render_template
 from api.upload import upload_bp 
-from dotenv import load_dotenv
-load_dotenv()
 
 app = Flask(__name__)
 app.register_blueprint(upload_bp, url_prefix='/api')

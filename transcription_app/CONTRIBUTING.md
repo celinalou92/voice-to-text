@@ -2,12 +2,10 @@
 An audio transcription application. 
 
 ## 👨‍💻 Tech Stack
-
 - **Python**
 - **Flask**
 - **Whisper AI**
 - **OpenAI API (responses beta)**
-- **pyannote-audio**
 - **Jinja2 (HTML templating)**
 
 
@@ -15,37 +13,27 @@ An audio transcription application.
 
 ```
 transcription_app/
-├── output/                         
-│   ├── conversion_wav/             
-│   │   └── conversion.wav
-│   ├── diarization/                
-│   │   └── diarization_output.json
-│   ├── openai/                    
-│   │   └── summary.json
+├── api/                   
+│   ├── upload.py
+├── output/                   
 │   ├── transcripts/                
 │   │   └── transcript.json
-│   └── whisper/                    
-│       └── whisper_transcript.json
 ├── templates/
 │   └── index.html
 ├── uploads/
 │   └──filename.m4a                             
-├── app.py               
-├── diarization_service.py                
+├── app.py                          
 ├── requirements.txt               
-├── summary_agent.py               
-├── transcribe_audio.py           
+├── summary_service.py               
+├── whisper_transcribe_audio.py           
 ├── transcript_response.py                     
-├── CONTRIBUTING.md                      
-├── pyproject.toml 
+├── CONTRIBUTING.md
 ```
 
 ### ⚙️ **Environment Setup**
 Create a `.env` file in your project root with:
 
 OPENAI_API_KEY=your-openai-key-here
-SUMMARY_AGENT=you-agent-id
-HUGGINGFACE_TOKEN=your-huggingface-key-here
 
 
 **Run Locally**
@@ -104,39 +92,6 @@ The OpenAI response is structured like this:
 }
 ```
 
-### Speaker Output
-The pyannote-audio response is structured like this:
-```json
-[
-    {
-        "speaker": "string",
-        "start": "double",
-        "end": "double"
-    },
-    {
-        "speaker": "string",
-        "start": "double",
-        "end": "double"
-    },
-    {
-        "speaker": "string",
-        "start": "double",
-        "end": "double"
-    },
-    {
-        "speaker": "string",
-        "start": "double",
-        "end": "double"
-    },
-    {
-        "speaker": "string",
-        "start": "double",
-        "end": "double"
-    }
-]
-```
-
- 
 ### 📤 **Example Output**
 ```json
 {

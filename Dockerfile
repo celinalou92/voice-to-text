@@ -27,14 +27,9 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY --chown=user /transcription_app $HOME/app
 
 RUN mkdir -p uploads \
-    output/conversion_wav \
-    output/diarization \
-    output/openai \
-    output/transcripts \
-    output/whisper
+    output/transcripts
 
-RUN --mount=type=secret,id=OPENAI_API_KEY,mode=0444,required=true 
-RUN --mount=type=secret,id=HUGGINGFACE_TOKEN,mode=0444,required=true
+RUN --mount=type=secret,id=OPENAI_API_KEY,mode=0444,required=true
 
 ENV PORT=7860
 

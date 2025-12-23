@@ -1,5 +1,18 @@
 import logging
 import json
+import os
+import sys
+from openai import OpenAI
+from dotenv import load_dotenv
+load_dotenv()
+
+OPENAI_API_KEY = os.getenv('OPENAI_API_KEY')
+
+if not OPENAI_API_KEY:
+    logging.error(f"Missing required environment variables: {sys.exit(1)}")
+
+client = OpenAI(api_key=OPENAI_API_KEY)
+
 instructions = """
 You are a paralegal assistant that is reviewing conversations to identify customer neglect and liability to the corporation.
 You should evaluate these conversations in a non-biased manner, but with deep knowledge of business misconduct and consumer law.
@@ -73,8 +86,6 @@ Summary of Key Points:
    - The customer was informed they would receive a confirmation email within 24 hours and was given the option to follow up with support if needed. The customer expressed appreciation for the support received during the call.
 ----
 """
-
-client = OpenAI(api_key=OPENAI_API_KEY)
 
 def generate_summary(transcript_data):
     print(f"    ... Generating Summary...")
