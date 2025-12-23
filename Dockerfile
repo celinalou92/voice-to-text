@@ -25,8 +25,6 @@ COPY --chown=user . $HOME/app
 RUN mkdir -p uploads \
     output/transcripts
 
-RUN --mount=type=secret,id=OPENAI_API_KEY,mode=0444,required=true
-
 ENV PORT=7860
 
 EXPOSE 7860
