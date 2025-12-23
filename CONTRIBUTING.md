@@ -39,14 +39,14 @@ OPENAI_API_KEY=your-openai-key-here
 **Run Locally**
 **Create virtual environment**
 ```bash
-python -m venv venv
-source venv/bin/activate
+python -m venv myenv
+source myenv/bin/activate
 ```
 
 1. Install dependencies
-    ```bash
-    python -m pip install -r requirements.txt
-    ```
+```bash
+python -m pip install -r requirements.txt
+```
 
 **Backend**
 ```bash

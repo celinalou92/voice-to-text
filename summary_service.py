@@ -88,15 +88,16 @@ Summary of Key Points:
 """
 
 def generate_summary(transcript_data):
+
     print(f"    ... Generating Summary...")
     transcription = []
     for segment in transcript_data.segments:
         transcription_data = {
-                        "id": segment["id"],
-                        "start": round(segment["start"], 2),
-                        "end": round(segment["end"], 2),
-                        "speaker": segment["speaker"],
-                        "text": segment["text"]
+                        "id": segment.id,
+                        "start": round(segment.start, 2),
+                        "end": round(segment.end, 2),
+                        "speaker": segment.speaker,
+                        "text": segment.text
                     }
         transcription.append(transcription_data)
     transcript_text = json.dumps(transcription)

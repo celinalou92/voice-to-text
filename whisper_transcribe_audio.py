@@ -22,7 +22,7 @@ def transcribe_audio(filepath):
                 response_format="diarized_json",
                 chunking_strategy="auto"
             )
-        print(f"    ... Transcribing...")
+        print(f"    ... ✅ Transcription Complete...")
         return transcript
     except Exception as e:
         logging.error(f"Transcription processing error: {e}")

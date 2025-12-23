@@ -8,15 +8,15 @@ def transcription_response(whisper_response, summary_response):
     try:
         transcription_segments = []
         for segment in whisper_response.segments:
-            start_time = str(timedelta(seconds=segment["start"])).split('.')[0]
-            end_time = str(timedelta(seconds=segment["end"])).split('.')[0]
+            start_time = str(timedelta(seconds=segment.start)).split('.')[0]
+            end_time = str(timedelta(seconds=segment.end)).split('.')[0]
             
             transcription_data = {
-                "id": segment["id"],
+                "id": segment.id,
                 "start": start_time,
                 "end": end_time,
-                "speaker": segment["speaker"],
-                "text": segment["text"]
+                "speaker": segment.speaker,
+                "text": segment.text
             }
             transcription_segments.append(transcription_data)
 

@@ -16,8 +16,6 @@ pyvenv.cfg
 *.log
 logs/
 *.tmp
-transcript_segment_data.json
-diarization_data.json
 
 # System files
 .DS_Store
