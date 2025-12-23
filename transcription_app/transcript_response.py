@@ -1,60 +1,30 @@
 import json
 import os
+import logging
 
-def transcription_response(transcript_data, summary_data, speaker_data):
+def transcription_response(whisper_response, summary_response):
     transcript_file = os.path.join('output/transcripts', 'transcript.json')
+    try:
+        transcription_segments = []
+        for segment in whisper_response.segments:
+            transcription_data = {
+                            "id": segment["id"],
+                            "start": round(segment["start"], 2),
+                            "end": round(segment["end"], 2),
+                            "speaker": segment["speaker"],
+                            "text": segment["text"]
+                        }
+            transcription_segments.append(transcription_data)
 
-    labeled_transcription = []
-    for seg_t in transcript_data:
-        t_start = seg_t['start']
-        t_end = seg_t['end']
-        best_matching_speaker = None
-        max_overlap = 0
-
-        for seg_s in speaker_data:
-            s_start = seg_s['start']
-            s_end = seg_s['end']
-            speaker = seg_s['speaker']
-
-            overlap_start = max(t_start, s_start)
-            overlap_end = min(t_end, s_end)
-            overlap_duration = overlap_end - overlap_start
-
-            if overlap_duration > 0 and overlap_duration > max_overlap:
-                max_overlap = overlap_duration
-                best_matching_speaker = speaker
-    
-        labeled_segment = {
-            "start": t_start,
-            "end": t_end,
-            "text": seg_t["text"],
-            "speaker": best_matching_speaker
+        final_transcript = {
+            "summary": json.loads(summary_response.output_text),
+            "segments": transcription_segments
         }
-        labeled_transcription.append(labeled_segment)
 
-    collapsed_transcription = []
-    for segment in labeled_transcription:
-        if not collapsed_transcription:
-            collapsed_transcription.append(segment)
-        else:
-            last = collapsed_transcription[-1]
-            if segment["speaker"] == last["speaker"]:
-                last["end"] = segment["end"]
-                last["text"] += " " + segment["text"]
-            else:
-                collapsed_transcription.append(segment)
-
-    final_transcript = {
-         "summary": summary_data,
-         "segments": collapsed_transcription
-    }
-
-    with open(transcript_file, "w") as f:
+        with open(transcript_file, "w") as f:
             json.dump(final_transcript, f, indent=4)
-    return final_transcript
-    
-def load_json(file_path):
-    with open(file_path, "r") as f:
-            return json.load(f)
-
+        return final_transcript
+    except Exception as e:
+        logging.error(e)
+        return f"Transcription Response error: {e}"
 

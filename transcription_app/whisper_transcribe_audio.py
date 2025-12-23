@@ -1,9 +1,6 @@
 import os
 import sys
 import logging
-import json
-import subprocess
-import glob
 from openai import OpenAI
 from dotenv import load_dotenv
 load_dotenv()
@@ -26,5 +23,5 @@ def transcribe_audio(filepath):
             )
         return transcript
     except Exception as e:
-        logging.error(f"Audio processing failed for {filepath}: {e}")
-        return f"Audio processing error: {e}"
+        logging.error(f"Transcription processing error: {e}")
+        return f"Transcription processing error: {e}"

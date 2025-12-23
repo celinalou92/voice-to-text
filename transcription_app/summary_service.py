@@ -9,9 +9,9 @@ load_dotenv()
 logging.basicConfig(level=logging.ERROR)
 
 OPENAI_API_KEY = os.getenv('OPENAI_API_KEY')
-SUMMARY_AGENT = os.getenv('SUMMARY_AGENT')
+SUMMARY_ASSISTANT = os.getenv('SUMMARY_ASSISTANT')
 
-if not OPENAI_API_KEY or not SUMMARY_AGENT: 
+if not OPENAI_API_KEY or not SUMMARY_ASSISTANT: 
     logging.error(f"Missing required environment variables: {sys.exit(1)}")
 
 instructions = """
@@ -89,7 +89,6 @@ Summary of Key Points:
 """
 
 client = OpenAI(api_key=OPENAI_API_KEY)
-summary_file_path = os.path.join('output/openai', 'summary.json')
 
 def generate_summary(transcript_data):
     transcription = []
@@ -156,12 +155,8 @@ def generate_summary(transcript_data):
             max_output_tokens=2048,
             top_p=1,
             store=False,
-        )
-        ## TODO change return?
-        summary = json.loads(response.output_text)
-        with open(summary_file_path, "w") as f:
-                json.dump(summary, f, indent=4)
-        return summary
+        )        
+        return response
     except Exception as e:
-        logging.error(e)
-        return f"An unexpected error occurred: {e}"
+        logging.error(f"Summary processing error: {e}")
+        return f"Summary processing error: {e}"
