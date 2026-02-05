@@ -159,4 +159,4 @@ def generate_summary(transcript_data):
         return response
     except Exception as e:
         logging.error(f"Summary processing error: {e}")
-        return f"Summary processing error: {e}"
+        return {'error': 'Unexpected error'}, 500

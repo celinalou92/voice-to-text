@@ -1,7 +1,8 @@
 import os
 import sys
+import json
 import logging
-from openai import OpenAI
+from openai import OpenAI, APIError, APIConnectionError, RateLimitError, APIStatusError
 from dotenv import load_dotenv
 load_dotenv()
 logging.basicConfiglevel=logging.ERROR
@@ -24,6 +25,18 @@ def transcribe_audio(filepath):
             )
         print(f"    ... ✅ Transcription Complete...")
         return transcript
+    except ValueError as e:
+        logging.error(f"Validation error: {e}")
+        return {'error': str(e)}, 400
+    except RateLimitError as e:
+        logging.error(f"Rate limited: {e}")
+        return {'error': 'API rate limit exceeded. Try again later.'}, 429
+    except APIConnectionError as e:
+        logging.error(f"Connection error: {e}")
+        return {'error': 'Failed to connect to OpenAI'}, 503
+    except APIStatusError as e:
+        logging.error(f"API error: {e.status_code} - {e.message}")
+        return {'error': f'OpenAI API error: {e.message}'}, 502
     except Exception as e:
-        logging.error(f"Transcription processing error: {e}")
-        return f"Transcription processing error: {e}"
+        logging.error(f"Unexpected error: {e}")
+        return {'error': 'Internal server error'}, 500
