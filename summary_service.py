@@ -9,7 +9,8 @@ load_dotenv()
 OPENAI_API_KEY = os.getenv('OPENAI_API_KEY')
 
 if not OPENAI_API_KEY:
-    logging.error(f"Missing required environment variables: {sys.exit(1)}")
+    logging.error(f"Missing required environment variable: OPEN_API_KEY")
+    {sys.exit(1)}
 
 client = OpenAI(api_key=OPENAI_API_KEY)
 
@@ -88,7 +89,6 @@ Summary of Key Points:
 """
 
 def generate_summary(transcript_data):
-
     print(f"    ... Generating Summary...")
     transcription = []
     for segment in transcript_data.segments:

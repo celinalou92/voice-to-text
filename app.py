@@ -7,7 +7,7 @@ app = Flask(__name__)
 app.register_blueprint(upload_bp, url_prefix='/api')
 
 os.makedirs('uploads', exist_ok=True)
-os.makedirs('output', exist_ok=True)
+os.makedirs('output/transcripts', exist_ok=True)
 
 @app.route('/')
 def index():
