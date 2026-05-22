@@ -367,7 +367,11 @@
 
             {% else %}
                 <div class="waiting">
-                    <p>Upload an audio file to get started</p>
+                    {% if error %}
+                        <p>Error uploading audio file: {{error.text}}</p>
+                    {% else %}
+                        <p>Upload an audio file to get started</p>
+                    {% endif %}
                 </div>
             {% endif %}
         </div>

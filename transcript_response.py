@@ -24,11 +24,10 @@ def transcription_response(whisper_response, summary_response):
             "summary": json.loads(summary_response.output_text),
             "segments": transcription_segments
         }
-
         with open(transcript_file, "w") as f:
             json.dump(final_transcript, f, indent=4)
         return final_transcript
     except Exception as e:
-        logging.error(e)
-        return f"Transcription Response error: {e}"
+        logging.error(f"Transcription Response error: {e}")
+        return {'transcript': {'error': 'Internal server error'}, 'text':'Error sorry try again!', 'code':500}
 

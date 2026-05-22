@@ -16,7 +16,9 @@ def index():
     
     if os.path.exists(transcript_file):
         transcript = load_json(transcript_file)
+        return render_template('index.html', transcript=transcript)
     return render_template('index.html', transcript=transcript)
+        ## return some json or something to display text 
 
 def load_json(file_path):
     with open(file_path, "r") as f:
