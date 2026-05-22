@@ -127,3 +127,11 @@ The OpenAI response is structured like this:
 ```
 
 
+### Deployment 
+Deployed using [fly ctl](https://fly.io/docs/getting-started/launch/) 
+
+Needs auth token 
+`fly auth login`
+
+Now deploy 
+`fly deploy`
