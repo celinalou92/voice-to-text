@@ -29,7 +29,6 @@
         }
 
         header {
-            background: #ffffff;
             padding: 48px 40px;
             border-bottom: 1px solid #e8eaed;
             text-align: center;
@@ -39,19 +38,19 @@
             font-size: 32px;
             font-weight: 500;
             margin-bottom: 8px;
-            color: #1a1a1a;
             letter-spacing: -0.5px;
         }
 
         header p {
             font-size: 15px;
             color: #5f6368;
-            font-weight: 400;
         }
 
         .content {
             padding: 40px;
         }
+
+        /* ── Upload form ── */
 
         .upload-section {
             margin-bottom: 40px;
@@ -62,12 +61,70 @@
             text-align: center;
         }
 
-        .upload-section input[type="file"] {
-            display: block;
-            margin: 20px auto;
-            padding: 8px;
-            cursor: pointer;
+        .input-type-selector {
+            display: inline-flex;
+            border: 1px solid #e8eaed;
+            border-radius: 6px;
+            overflow: hidden;
+            margin-bottom: 24px;
+        }
+
+        .input-type-selector label {
+            padding: 8px 20px;
             font-size: 14px;
+            font-weight: 500;
+            color: #5f6368;
+            cursor: pointer;
+            border-right: 1px solid #e8eaed;
+            background: white;
+            transition: background 0.15s, color 0.15s;
+            user-select: none;
+        }
+
+        .input-type-selector label:last-child {
+            border-right: none;
+        }
+
+        .input-type-selector input[type="radio"] {
+            display: none;
+        }
+
+        .input-type-selector input[type="radio"]:checked + span {
+            /* handled via JS class below */
+        }
+
+        .input-type-selector label:has(input:checked) {
+            background: #1f73e6;
+            color: white;
+        }
+
+        .file-input-wrapper {
+            margin-bottom: 20px;
+        }
+
+        .file-input-wrapper input[type="file"] {
+            display: block;
+            margin: 0 auto;
+            padding: 8px;
+            font-size: 14px;
+            color: #5f6368;
+            cursor: pointer;
+        }
+
+        .file-input-wrapper input[type="url"] {
+            width: 100%;
+            max-width: 480px;
+            padding: 10px 14px;
+            font-size: 14px;
+            border: 1px solid #e8eaed;
+            border-radius: 4px;
+            color: #202124;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .file-input-wrapper input[type="url"]:focus {
+            border-color: #1f73e6;
         }
 
         .upload-section button {
@@ -87,6 +144,8 @@
             box-shadow: 0 2px 8px rgba(31, 115, 230, 0.3);
         }
 
+        /* ── Waiting / error state ── */
+
         .waiting {
             text-align: center;
             color: #5f6368;
@@ -94,47 +153,18 @@
             padding: 80px 20px;
         }
 
+        /* ── Summary ── */
+
         .summary-section {
             margin-bottom: 48px;
         }
 
-        .summary-section h2 {
+        .summary-section h2,
+        .transcript-section h2 {
             font-size: 20px;
             font-weight: 500;
-            color: #1a1a1a;
             margin-bottom: 28px;
             letter-spacing: -0.3px;
-        }
-
-        .summary-wrapper {
-            display: flex;
-            gap: 24px;
-            align-items: flex-start;
-        }
-
-        .observations {
-            background: #f8f9fa;
-            padding: 28px;
-            border-radius: 8px;
-            flex: 0 0 35%;
-            min-width: 0;
-            border: 1px solid #e8eaed;
-        }
-
-        .observations h3 {
-            font-size: 11px;
-            font-weight: 600;
-            text-transform: uppercase;
-            color: #5f6368;
-            margin-bottom: 14px;
-            letter-spacing: 0.4px;
-        }
-
-        .observations p {
-            font-size: 14px;
-            color: #202124;
-            line-height: 1.8;
-            font-weight: 400;
         }
 
         .summary-top-row {
@@ -170,7 +200,6 @@
             font-size: 13px;
             color: #202124;
             line-height: 1.6;
-            font-weight: 400;
         }
 
         .summary-card p.empty {
@@ -178,16 +207,10 @@
             font-style: italic;
         }
 
+        /* ── Transcript table ── */
+
         .transcript-section {
             margin-top: 48px;
-        }
-
-        .transcript-section h2 {
-            font-size: 20px;
-            font-weight: 500;
-            color: #1a1a1a;
-            margin-bottom: 28px;
-            letter-spacing: -0.3px;
         }
 
         table {
@@ -204,17 +227,17 @@
         th {
             padding: 16px 12px;
             text-align: left;
+            font-size: 13px;
             font-weight: 600;
             color: #202124;
-            font-size: 13px;
             letter-spacing: -0.2px;
         }
 
         td {
             padding: 14px 12px;
             border-bottom: 1px solid #f0f0f0;
-            color: #5f6368;
             font-size: 13px;
+            color: #5f6368;
         }
 
         tbody tr:hover {
@@ -226,54 +249,33 @@
             font-weight: 600;
         }
 
+        /* ── Responsive ── */
+
         @media (max-width: 768px) {
-            .container {
-                border-radius: 0;
-            }
+            body { padding: 0; }
 
-            header {
-                padding: 32px 24px;
-            }
+            .container { border-radius: 0; }
 
-            header h1 {
-                font-size: 24px;
-            }
+            header { padding: 32px 24px; }
+            header h1 { font-size: 24px; }
+            header p  { font-size: 14px; }
 
-            header p {
-                font-size: 14px;
-            }
+            .content { padding: 24px; }
 
-            .content {
-                padding: 24px;
-            }
+            .upload-section { padding: 24px; }
+            .upload-section button { padding: 10px 24px; font-size: 14px; }
 
-            .upload-section {
-                padding: 24px;
-            }
-
-            .upload-section button {
-                padding: 10px 24px;
-                font-size: 14px;
-            }
-
-            .summary-top-row,
-            .summary-bottom-row {
-                grid-template-columns: 1fr !important;
-            }
-
-            table {
-                font-size: 12px;
-            }
-
-            th, td {
-                padding: 12px 8px;
-            }
+            .input-type-selector { width: 100%; }
+            .input-type-selector label { flex: 1; text-align: center; padding: 8px 12px; }
 
             .summary-section h2,
-            .transcript-section h2 {
-                font-size: 18px;
-                margin-bottom: 20px;
-            }
+            .transcript-section h2 { font-size: 18px; margin-bottom: 20px; }
+
+            .summary-top-row,
+            .summary-bottom-row { grid-template-columns: 1fr; }
+
+            th, td { padding: 12px 8px; }
+            table  { font-size: 12px; }
         }
     </style>
 </head>
@@ -281,21 +283,48 @@
     <div class="container">
         <header>
             <h1>Audio Transcription</h1>
-            <p>Upload audio files to analyze customer service interactions for compliance, liability, and service quality issues.</p>
+            <p>Upload audio or video files, or paste a link, to analyze customer service interactions.</p>
         </header>
 
         <div class="content">
             <div class="upload-section">
-                <form action="/api/upload" method="post" enctype="multipart/form-data">
-                    <input type="file" name="audio" accept=".m4a,.mp4,.wav,.mp3,.flac,.aac,.ogg,.wma" required>
-                    <button type="submit">Upload & Transcribe</button>
+                <form action="/api/upload" method="post" enctype="multipart/form-data" id="upload-form">
+
+                    <div class="input-type-selector">
+                        <label>
+                            <input type="radio" name="input-type" value="audio" checked onchange="switchMode(this.value)">
+                            Audio file
+                        </label>
+                        <label>
+                            <input type="radio" name="input-type" value="video" onchange="switchMode(this.value)">
+                            Video file
+                        </label>
+                        <label>
+                            <input type="radio" name="input-type" value="link" onchange="switchMode(this.value)">
+                            Link
+                        </label>
+                    </div>
+
+                    <div class="file-input-wrapper">
+                        <div id="audio-input">
+                            <input type="file" name="audio" accept=".m4a,.mp4,.wav,.mp3,.flac,.aac,.ogg,.wma">
+                        </div>
+                        <div id="video-input" hidden>
+                            <input type="file" name="video" accept=".mp4,.mov,.avi,.mkv,.webm,.flv,.wmv,.m4v">
+                        </div>
+                        <div id="link-input" hidden>
+                            <input type="url" name="link" placeholder="https://example.com/media">
+                        </div>
+                    </div>
+
+                    <button type="submit">Upload &amp; Transcribe</button>
                 </form>
             </div>
 
             {% if transcript %}
                 <div class="summary-section">
                     <h2>Summary</h2>
-                    
+
                     <div class="summary-top-row">
                         <div class="summary-card">
                             <h3>Overview</h3>
@@ -303,7 +332,6 @@
                                 {{ transcript.summary.observations }}
                             </p>
                         </div>
-
                         <div class="summary-card">
                             <h3>Outcome</h3>
                             <p {% if transcript.summary.key_points.outcome == 'N/A' %}class="empty"{% endif %}>
@@ -319,21 +347,18 @@
                                 {{ transcript.summary.key_points.account_status }}
                             </p>
                         </div>
-
                         <div class="summary-card">
                             <h3>Customer Inquiry</h3>
                             <p {% if transcript.summary.key_points.customer_inquiry == 'N/A' %}class="empty"{% endif %}>
                                 {{ transcript.summary.key_points.customer_inquiry }}
                             </p>
                         </div>
-
                         <div class="summary-card">
                             <h3>Account Issues</h3>
                             <p {% if transcript.summary.key_points.account_issues == 'N/A' %}class="empty"{% endif %}>
                                 {{ transcript.summary.key_points.account_issues }}
                             </p>
                         </div>
-
                         <div class="summary-card">
                             <h3>Customer Service Response</h3>
                             <p {% if transcript.summary.key_points.customer_service_response == 'N/A' %}class="empty"{% endif %}>
@@ -368,13 +393,24 @@
             {% else %}
                 <div class="waiting">
                     {% if error %}
-                        <p>Error uploading audio file: {{error.text}}</p>
+                        <p>Error: {{ error.text }}</p>
                     {% else %}
-                        <p>Upload an audio file to get started</p>
+                        <p>Upload a file or paste a link to get started</p>
                     {% endif %}
                 </div>
             {% endif %}
         </div>
     </div>
+
+    <script>
+        function switchMode(mode) {
+            document.getElementById('audio-input').hidden = mode !== 'audio';
+            document.getElementById('video-input').hidden = mode !== 'video';
+            document.getElementById('link-input').hidden  = mode !== 'link';
+
+            document.querySelectorAll('#upload-form input[type="file"], #upload-form input[type="url"]')
+                .forEach(el => el.value = '');
+        }
+    </script>
 </body>
 </html>
