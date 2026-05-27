@@ -1,18 +1,21 @@
 import os
 import logging
-from flask import Blueprint, request, jsonify, app, redirect, url_for
+from flask import Blueprint, request, jsonify, redirect, url_for
 from whisper_transcribe_audio import transcribe_audio
 from transcript_response import transcription_response
 from summary_service import generate_summary
+from yt_download import yt_download
 
 upload_bp = Blueprint('upload', __name__)
 
 @upload_bp.route('/upload', methods=['POST'])
 def upload_audio():
-    audio_file = request.files.get('audio')
-
-    filepath = os.path.join('uploads', audio_file.filename)
-    audio_file.save(filepath)
+    if request.form:
+        filepath = yt_download(request.form.get('link'), 'uploads')
+    else:
+        audio_file = request.files.get('audio')
+        filepath = os.path.join('uploads', audio_file.filename)
+        audio_file.save(filepath)
 
     try:
         print("\n👨‍💻 Processing Audio....")
